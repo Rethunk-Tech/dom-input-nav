@@ -8,13 +8,52 @@ Run and use `dom-input-nav`. Internals: [AGENTS.md](AGENTS.md).
 bun add @rethunk/dom-input-nav
 ```
 
-<!-- scaffold: the smallest complete TypeScript example of the main entry point, type-checked
-against the real API: imports shown, errors handled. -->
+```ts
+import { arrowFocus, formatChord, isTypingTarget, matchChord } from '@rethunk/dom-input-nav'
+
+const bindings = { palette: 'Ctrl+K', filter: 'Ctrl+F' }
+
+window.addEventListener('keydown', (e) => {
+  if (isTypingTarget(e.target instanceof HTMLElement ? e.target : null)) {
+    return
+  }
+  const id = matchChord(e, bindings)
+  if (id) {
+    e.preventDefault()
+    console.log(id, formatChord(e))
+  }
+})
+
+const grid = document.querySelector<HTMLElement>('#grid')
+grid?.addEventListener('keydown', (e) => {
+  arrowFocus(
+    {
+      key: e.key,
+      defaultPrevented: e.defaultPrevented,
+      target: e.target,
+      currentTarget: grid,
+      preventDefault: () => e.preventDefault(),
+    },
+    '.card',
+  )
+})
+```
 
 ## Contracts
 
-<!-- scaffold: a two-column table, one row per exported entry point or behaviour a caller depends
-on: what it refuses, what it guarantees on failure, what it never does. -->
+| Entry point | Contract |
+| --- | --- |
+| `parseKeys(keys)` | `"Ctrl+Shift+F"` to a `Chord`; `null` when no key is named. A trailing `+` is the plus key. |
+| `formatChord(e)` | A key event to its chord string; `null` for a lone modifier press. |
+| `matchChord(e, bindings)` | The first id, in the table's insertion order, whose chord equals `e`; `null` for none. An empty chord matches nothing. |
+| Meta and Ctrl | Folded into one: `Cmd`, `Meta` and `Ctrl` all parse to `ctrlKey`, and matching compares `ctrlKey \|\| metaKey`. An app that needs them distinct does not use this grammar. |
+| `isTypingTarget(el)` | `true` for text-like inputs, `textarea`, `select` and content-editable elements. It is a deny-list of non-text input types, so an unknown input type counts as typing. |
+| `arrowFocus(e, items, pick?)` | Moves focus among `items` inside `e.currentTarget` and prevents the default. It does nothing for a typing target or an event already prevented. |
+| `nextIndex(rects, at, key)` | The item an arrow key moves to; `-1` means stay. |
+| `heldActions(pads)` | The actions held on every pad, the left stick read as the d-pad at half deflection. |
+| `firedActions(held, due, now)` | Each action once as it is pressed; a held direction again after a pause, then at a steady rate. `due` is state the caller keeps. |
+| `heldElsewhere(held, due)` | Marks held actions as fired, so a press made while another window had the pad does nothing on return. |
+| `spatialNext(from, rects, dir, skip?)` | The index of the nearest rect that lies in the direction; `-1` for none. |
 
 ## Requirements
 

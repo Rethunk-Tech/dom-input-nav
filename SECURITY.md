@@ -14,10 +14,10 @@ Please do not open a public issue for a suspected vulnerability first.
 
 ## What is in scope
 
-<!-- scaffold: the untrusted inputs this package handles, and each property a crafted input must not
-break (an escape, an unbounded allocation, a panic). One bullet each, naming the API. -->
+- `parseKeys` reads chord strings an application may load from storage or a file. Any string must
+  return a `Chord` or `null`, never throw or loop.
 
 ## What is out of scope
 
-<!-- scaffold: what the caller is trusted to have checked already, and behaviour that is intended
-rather than a vulnerability. -->
+- What an application does on a match; which chords it allows.
+- Real gamepad data beyond the standard mapping's shape.

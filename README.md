@@ -12,8 +12,12 @@
 
 Keyboard chords, arrow-key grid focus and standard-mapping gamepad input for DOM apps, with no framework import. Package `@rethunk/dom-input-nav`. First consumer: Mortar.
 
-<!-- scaffold: one short paragraph on what the package guarantees and why it exists, in plain
-words. -->
+It imports nothing, React included: every function takes plain objects, so a framework's event or a native one
+fits. Chords are stored as short strings such as `Ctrl+Shift+F`, so an app can let people rebind them.
+
+```ts
+matchChord(event, { palette: 'Ctrl+K', play: 'Ctrl+P' }) // 'palette' | 'play' | null
+```
 
 ## Quick start
 
@@ -25,7 +29,11 @@ A worked example and the contracts: [HUMANS.md](HUMANS.md).
 
 ## Features
 
-<!-- scaffold: 3 to 6 bullets, each a capability a caller can rely on. No roadmap. -->
+- `parseKeys`, `formatChord` and `matchChord` turn key events into a stored chord string and match them against a table.
+- `isTypingTarget` tells a text field from a checkbox, so shortcuts stay quiet only while typing.
+- `arrowFocus` and `nextIndex` walk a grid or row of items with the arrow keys.
+- `heldActions`, `firedActions` and `heldElsewhere` turn standard-mapping gamepad state into actions with key repeat.
+- `spatialNext` picks the control nearest in a direction, for controller focus.
 
 ## Documentation
 
