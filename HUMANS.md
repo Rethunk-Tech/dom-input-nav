@@ -25,18 +25,7 @@ window.addEventListener('keydown', (e) => {
 })
 
 const grid = document.querySelector<HTMLElement>('#grid')
-grid?.addEventListener('keydown', (e) => {
-  arrowFocus(
-    {
-      key: e.key,
-      defaultPrevented: e.defaultPrevented,
-      target: e.target,
-      currentTarget: grid,
-      preventDefault: () => e.preventDefault(),
-    },
-    '.card',
-  )
-})
+grid?.addEventListener('keydown', (e) => arrowFocus(e, '.card'))
 ```
 
 ## Contracts

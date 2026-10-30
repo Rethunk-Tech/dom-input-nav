@@ -39,3 +39,21 @@ test('arrowFocus moves focus to the next item and leaves text fields alone', () 
   expect(document.activeElement).toBe(b as HTMLElement)
   expect(prevented).toBe(true)
 })
+
+test('arrowFocus takes a native keydown, and a text field keeps its arrow keys', () => {
+  document.body.innerHTML =
+    '<div id="row"><button id="a">a</button><input id="t"><button id="b">b</button></div>'
+  const row = document.getElementById('row') as HTMLElement
+  row.addEventListener('keydown', (e) => arrowFocus(e, 'button, input'))
+  const press = (el: HTMLElement) =>
+    el.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }))
+
+  const a = document.getElementById('a') as HTMLElement
+  a.focus()
+  press(a)
+  const t = document.getElementById('t') as HTMLElement
+  expect(document.activeElement).toBe(t)
+
+  press(t)
+  expect(document.activeElement).toBe(t)
+})

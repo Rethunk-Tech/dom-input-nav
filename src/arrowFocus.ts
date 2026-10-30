@@ -5,7 +5,7 @@ interface ArrowEvent {
   key: string
   defaultPrevented: boolean
   target: EventTarget | null
-  currentTarget: HTMLElement
+  currentTarget: EventTarget | null
   preventDefault(): void
 }
 
@@ -65,7 +65,11 @@ function arrowFocus(
   pick: (item: HTMLElement) => HTMLElement | null = (item) =>
     item.matches(FOCUSABLE) ? item : item.querySelector<HTMLElement>(FOCUSABLE),
 ): void {
-  if (e.defaultPrevented || isTypingTarget(e.target instanceof HTMLElement ? e.target : null)) {
+  if (
+    e.defaultPrevented ||
+    !(e.currentTarget instanceof Element) ||
+    isTypingTarget(e.target instanceof HTMLElement ? e.target : null)
+  ) {
     return
   }
   const list = [...e.currentTarget.querySelectorAll<HTMLElement>(items)]
