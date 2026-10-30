@@ -8,4 +8,5 @@ export {
   type PadAction,
   spatialNext,
 } from './gamepad.ts'
+export { TYPE_RESET_MS, typeaheadChar, typedKey, typedMatch } from './typeahead.ts'
 export { isTypingTarget, type TypingTarget } from './typing.ts'

@@ -36,7 +36,9 @@ grid?.addEventListener('keydown', (e) => arrowFocus(e, '.card'))
 | `formatChord(e)` | A key event to its chord string; `null` for a lone modifier press. |
 | `matchChord(e, bindings)` | The first id, in the table's insertion order, whose chord equals `e`; `null` for none. An empty chord matches nothing. |
 | Meta and Ctrl | Folded into one: `Cmd`, `Meta` and `Ctrl` all parse to `ctrlKey`, and matching compares `ctrlKey \|\| metaKey`. An app that needs them distinct does not use this grammar. |
-| `isTypingTarget(el)` | `true` for text-like inputs, `textarea`, `select` and content-editable elements; an unknown input type counts as typing. |
+| `isTypingTarget(el)` | `true` for text-like inputs, `textarea`, `select` and content-editable elements; an unknown input type counts as typing. `{ ancestors: true }` also counts an element with a typing target above it. |
+| `typeaheadChar(e)` | The letter or digit of a key event with no Ctrl, Alt or Meta, or `undefined` when it is another key or `e.target` is a typing target. |
+| `typedKey(name)` / `typedMatch(items, typed, nameOf)` | `typedKey` keeps letters and digits, lower case, accents dropped. `typedMatch` is the first item whose key starts with the typed text, else the first that holds it. `TYPE_RESET_MS` is the pause after which typing starts a new search; the caller keeps the buffer. |
 | `arrowFocus(e, items, pick?)` | Moves focus among `items` inside `e.currentTarget`, preventing the default only when focus moves. It does nothing for a typing target or an event already prevented. |
 | `nextIndex(rects, at, key)` | The item an arrow key moves to; `-1` means stay. |
 | `heldActions(pads)` | The actions held on every pad, the left stick read as the d-pad at half deflection. |

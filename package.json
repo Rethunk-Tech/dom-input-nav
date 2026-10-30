@@ -1,6 +1,6 @@
 {
   "name": "@rethunk/dom-input-nav",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Keyboard chords, arrow-key grid focus and standard-mapping gamepad input for DOM apps, with no framework import.",
   "license": "MIT",
   "author": "Rethunk.Tech, LLC",

@@ -19,3 +19,13 @@ test('other typing elements, and nothing', () => {
   expect(isTypingTarget({ tagName: 'DIV' })).toBe(false)
   expect(isTypingTarget(null)).toBe(false)
 })
+
+test('ancestors: inside a typing target counts, a checkbox in one still does not alone', () => {
+  const editor = { tagName: 'DIV', isContentEditable: true }
+  const span = { tagName: 'SPAN', parentElement: editor }
+  expect(isTypingTarget(span)).toBe(false)
+  expect(isTypingTarget(span, { ancestors: true })).toBe(true)
+  const box = { tagName: 'INPUT', type: 'checkbox', parentElement: { tagName: 'DIV' } }
+  expect(isTypingTarget(box, { ancestors: true })).toBe(false)
+  expect(isTypingTarget(null, { ancestors: true })).toBe(false)
+})

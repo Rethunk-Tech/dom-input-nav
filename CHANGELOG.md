@@ -6,6 +6,15 @@ Notable changes to `dom-input-nav`. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-30
+
+### Added
+
+- `isTypingTarget(el, { ancestors: true })`: also counts an element inside a typing target.
+- `typeaheadChar`, `typedKey`, `typedMatch`, `TYPE_RESET_MS`: list typeahead over typed characters.
+
+## [0.1.0] - 2026-10-30
+
 ### Added
 
 - `isTypingTarget`: which focused elements take typed text.
@@ -13,4 +22,6 @@ Notable changes to `dom-input-nav`. The format follows
 - `arrowFocus`, `nextIndex`: arrow-key focus over a grid or row.
 - `heldActions`, `firedActions`, `heldElsewhere`, `spatialNext`: standard-mapping gamepad input.
 
+[0.1.1]: https://github.com/Rethunk-Tech/dom-input-nav/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/Rethunk-Tech/dom-input-nav/releases/tag/v0.1.0
 [Unreleased]: https://github.com/Rethunk-Tech/dom-input-nav/commits/main

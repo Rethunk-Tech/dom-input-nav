@@ -29,6 +29,7 @@ would upload.
 | --- | --- |
 | `src/index.ts` | The public surface |
 | `src/typing.ts` | `isTypingTarget` and the non-text input list |
+| `src/typeahead.ts` | `typeaheadChar` and the typed-name matching |
 | `src/chord.ts` | Chord parse, format and match |
 | `src/arrowFocus.ts` | Arrow-key focus over a list of items |
 | `src/gamepad.ts` | Standard-mapping gamepad actions and spatial focus |
