@@ -46,6 +46,7 @@ function chordKey(c: {
   return `${ctrl ? 1 : 0}${c.shiftKey ? 1 : 0}${c.altKey ? 1 : 0}${eventKey(c.key)}`
 }
 
+/** A key and its modifiers, as a KeyboardEvent carries them. Meta folds into Ctrl: `Cmd+K` and `Ctrl+K` are one chord. */
 export interface Chord {
   key: string
   ctrlKey?: boolean
