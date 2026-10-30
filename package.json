@@ -1,0 +1,37 @@
+{
+  "name": "@rethunk/dom-input-nav",
+  "version": "0.1.0",
+  "description": "Keyboard chords, arrow-key grid focus and standard-mapping gamepad input for DOM apps, with no framework import.",
+  "license": "MIT",
+  "author": "Rethunk.Tech, LLC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rethunk-Tech/dom-input-nav.git"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "packageManager": "bun@1.4.3",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "lint": "biome check --error-on-warnings .",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "bun test",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "pack:check": "bun scripts/check-pack.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.4",
+    "@happy-dom/global-registrator": "^21.0.4",
+    "@types/bun": "^1.4.4",
+    "typescript": "^7.0.2"
+  }
+}
