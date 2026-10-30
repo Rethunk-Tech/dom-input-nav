@@ -22,6 +22,6 @@ Notable changes to `dom-input-nav`. The format follows
 - `arrowFocus`, `nextIndex`: arrow-key focus over a grid or row.
 - `heldActions`, `firedActions`, `heldElsewhere`, `spatialNext`: standard-mapping gamepad input.
 
-[0.1.1]: https://github.com/Rethunk-Tech/dom-input-nav/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/Rethunk-Tech/dom-input-nav/releases/tag/v0.1.0
-[Unreleased]: https://github.com/Rethunk-Tech/dom-input-nav/commits/main
+[0.1.1]: https://github.com/Rethunk-Tech/dom-input-nav/releases/tag/v0.1.1
+[0.1.0]: https://www.npmjs.com/package/@rethunk/dom-input-nav/v/0.1.0
+[Unreleased]: https://github.com/Rethunk-Tech/dom-input-nav/compare/v0.1.1...HEAD
