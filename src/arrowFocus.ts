@@ -18,8 +18,8 @@ interface Rect {
 
 const ROW_SLACK_PX = 4
 
-// nextIndex is the item an arrow key moves to from item at: Left and Right step through the items in order, Up and
-// Down go to the nearest row above or below and, in it, the item nearest by horizontal centre. -1 means stay.
+/** The item an arrow key moves to from item `at`: Left and Right step through the items in order, Up and Down go to the
+ * nearest row above or below and, in it, the item nearest by horizontal centre. -1 means stay. */
 function nextIndex(rects: readonly Rect[], at: number, key: string): number {
   const cur = rects[at]
   if (!cur) {
@@ -56,9 +56,9 @@ function nextIndex(rects: readonly Rect[], at: number, key: string): number {
 const FOCUSABLE =
   'button:not(:disabled), a[href], [tabindex]:not([tabindex="-1"]), input, select, textarea'
 
-// arrowFocus walks a grid or row of items with the arrow keys, which a controller sends under Steam Input. items
-// selects the items inside the handler's element; pick chooses what to focus in the item reached (by default the
-// item itself when focusable, else its first control). Text fields and handlers that already took the key keep it.
+/** Walks a grid or row of items with the arrow keys, which a controller sends under Steam Input. items selects the
+ * items inside the handler's element; pick chooses what to focus in the item reached (by default the item itself when
+ * focusable, else its first control). Text fields and handlers that already took the key keep it. */
 function arrowFocus(
   e: ArrowEvent,
   items: string,

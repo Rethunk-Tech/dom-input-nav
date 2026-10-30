@@ -12,9 +12,8 @@
 
 Keyboard chords, arrow-key grid focus and standard-mapping gamepad input for DOM apps, with no framework import. Package `@rethunk/dom-input-nav`. First consumer: Mortar.
 
-It imports nothing, React included: every function takes plain objects, so a framework's event or a native one
-fits. Chords are stored as short strings such as `Ctrl+Shift+F`, so an app can let people rebind them.
-Cmd and Meta read as Ctrl, so `Ctrl+K` also fires on Cmd+K and no chord tells the two apart.
+Every function takes plain objects, so a framework's event or a native one fits. Chords are stored as
+short strings such as `Ctrl+Shift+F`, so an app can let people rebind them. Cmd and Meta read as Ctrl, so `Ctrl+K` also fires on Cmd+K and no chord tells the two apart.
 
 ```ts
 matchChord(event, { palette: 'Ctrl+K', play: 'Ctrl+P' }) // 'palette' | 'play' | null

@@ -36,8 +36,8 @@ grid?.addEventListener('keydown', (e) => arrowFocus(e, '.card'))
 | `formatChord(e)` | A key event to its chord string; `null` for a lone modifier press. |
 | `matchChord(e, bindings)` | The first id, in the table's insertion order, whose chord equals `e`; `null` for none. An empty chord matches nothing. |
 | Meta and Ctrl | Folded into one: `Cmd`, `Meta` and `Ctrl` all parse to `ctrlKey`, and matching compares `ctrlKey \|\| metaKey`. An app that needs them distinct does not use this grammar. |
-| `isTypingTarget(el)` | `true` for text-like inputs, `textarea`, `select` and content-editable elements. It is a deny-list of non-text input types, so an unknown input type counts as typing. |
-| `arrowFocus(e, items, pick?)` | Moves focus among `items` inside `e.currentTarget` and prevents the default. It does nothing for a typing target or an event already prevented. |
+| `isTypingTarget(el)` | `true` for text-like inputs, `textarea`, `select` and content-editable elements; an unknown input type counts as typing. |
+| `arrowFocus(e, items, pick?)` | Moves focus among `items` inside `e.currentTarget`, preventing the default only when focus moves. It does nothing for a typing target or an event already prevented. |
 | `nextIndex(rects, at, key)` | The item an arrow key moves to; `-1` means stay. |
 | `heldActions(pads)` | The actions held on every pad, the left stick read as the d-pad at half deflection. |
 | `firedActions(held, due, now)` | Each action once as it is pressed; a held direction again after a pause, then at a steady rate. `due` is state the caller keeps. |

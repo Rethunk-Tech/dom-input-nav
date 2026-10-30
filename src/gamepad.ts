@@ -103,9 +103,9 @@ const SLACK_PX = 4
 const ORTHO_WEIGHT = 2
 
 /**
- * spatialNext is the rect a direction moves to from `from`: one whose centre lies that way, scored by the gap along
- * the direction plus twice the sideways gap, so the nearest control in line wins over a nearer one off to the side; a tie goes to the most centred.
- * skip is from's own index in rects, or -1. -1 means nothing lies that way.
+ * The rect a direction moves to from `from`: one whose centre lies that way, scored by the gap along the direction plus
+ * twice the sideways gap, so the nearest control in line wins over a nearer one off to the side; a tie goes to the most
+ * centred. skip is from's own index in rects, or -1. -1 means nothing lies that way.
  */
 function spatialNext(from: Rect, rects: readonly Rect[], dir: Direction, skip = -1): number {
   const cx = (r: Rect) => (r.left + r.right) / 2
