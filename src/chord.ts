@@ -1,31 +1,31 @@
-const toEventKey: Record<string, string> = {
-  Esc: 'Escape',
-  Escape: 'Escape',
-  '↑': 'ArrowUp',
-  ArrowUp: 'ArrowUp',
-  '↓': 'ArrowDown',
-  ArrowDown: 'ArrowDown',
-  Left: 'ArrowLeft',
-  ArrowLeft: 'ArrowLeft',
-  Right: 'ArrowRight',
-  ArrowRight: 'ArrowRight',
-  Space: ' ',
-  ' ': ' ',
-}
+const toEventKey = new Map<string, string>([
+  ['Esc', 'Escape'],
+  ['Escape', 'Escape'],
+  ['↑', 'ArrowUp'],
+  ['ArrowUp', 'ArrowUp'],
+  ['↓', 'ArrowDown'],
+  ['ArrowDown', 'ArrowDown'],
+  ['Left', 'ArrowLeft'],
+  ['ArrowLeft', 'ArrowLeft'],
+  ['Right', 'ArrowRight'],
+  ['ArrowRight', 'ArrowRight'],
+  ['Space', ' '],
+  [' ', ' '],
+])
 
-const fromEventKey: Record<string, string> = {
-  Escape: 'Esc',
-  ArrowUp: '↑',
-  ArrowDown: '↓',
-  ArrowLeft: 'Left',
-  ArrowRight: 'Right',
-  ' ': 'Space',
-}
+const fromEventKey = new Map<string, string>([
+  ['Escape', 'Esc'],
+  ['ArrowUp', '↑'],
+  ['ArrowDown', '↓'],
+  ['ArrowLeft', 'Left'],
+  ['ArrowRight', 'Right'],
+  [' ', 'Space'],
+])
 
 const modifiers = new Set(['Control', 'Shift', 'Alt', 'Meta', 'OS', 'Hyper', 'Super'])
 
 function eventKey(key: string): string {
-  const mapped = toEventKey[key]
+  const mapped = toEventKey.get(key)
   if (mapped) {
     return mapped
   }
@@ -97,7 +97,7 @@ export function formatChord(e: Chord): string | null {
   if (e.altKey) {
     parts.push('Alt')
   }
-  const display = fromEventKey[e.key] ?? (e.key.length === 1 ? e.key.toUpperCase() : e.key)
+  const display = fromEventKey.get(e.key) ?? (e.key.length === 1 ? e.key.toUpperCase() : e.key)
   parts.push(display)
   return parts.join('+')
 }

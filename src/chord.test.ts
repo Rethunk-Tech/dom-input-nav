@@ -62,3 +62,16 @@ test('Meta folds into Ctrl', () => {
   expect(parseKeys('Cmd+K')).toEqual(parseKeys('Ctrl+K'))
   expect(formatChord({ key: 'k', metaKey: true })).toBe('Ctrl+K')
 })
+
+test('a binding named like an Object.prototype member never matches or throws', () => {
+  const e = { key: 'a', ctrlKey: true }
+  for (const keys of [
+    'constructor',
+    'hasOwnProperty',
+    'Ctrl+constructor',
+    'toString',
+    '__proto__',
+  ]) {
+    expect(matchChord(e, { x: keys })).toBeNull()
+  }
+})
