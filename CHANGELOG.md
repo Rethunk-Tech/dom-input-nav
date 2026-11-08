@@ -6,6 +6,11 @@ Notable changes to `dom-input-nav`. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `@rethunk/dom-input-nav/playwright`: `installPad`, `press` and `Button` fake a standard-mapping gamepad in a Playwright test.
+- `Button`: the W3C standard-mapping button indices, exported for mapping code.
+
 ## [0.1.2] - 2026-11-07
 
 ### Fixed

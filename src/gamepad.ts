@@ -1,3 +1,5 @@
+import { Button as BUTTON } from './buttons.ts'
+
 type Direction = 'up' | 'down' | 'left' | 'right'
 type PadAction = Direction | 'confirm' | 'back' | 'prevTab' | 'nextTab' | 'start'
 
@@ -8,18 +10,6 @@ interface Rect {
   right: number
 }
 
-// The standard mapping (w3c.github.io/gamepad/#remapping), which Steam Input's virtual pad and an Xbox-style pad report.
-const BUTTON = {
-  a: 0,
-  b: 1,
-  lb: 4,
-  rb: 5,
-  start: 9,
-  up: 12,
-  down: 13,
-  left: 14,
-  right: 15,
-} as const
 const BUTTONS: readonly (readonly [number, PadAction])[] = [
   [BUTTON.a, 'confirm'],
   [BUTTON.b, 'back'],

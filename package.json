@@ -15,6 +15,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./playwright": {
+      "types": "./dist/playwright.d.ts",
+      "default": "./dist/playwright.js"
     }
   },
   "files": [
@@ -31,7 +35,16 @@
   "devDependencies": {
     "@biomejs/biome": "^2.6.6",
     "@happy-dom/global-registrator": "^21.0.4",
+    "@playwright/test": "^1.65.0",
     "@types/bun": "^1.4.4",
     "typescript": "^7.0.2"
+  },
+  "peerDependencies": {
+    "@playwright/test": "^1.65.0"
+  },
+  "peerDependenciesMeta": {
+    "@playwright/test": {
+      "optional": true
+    }
   }
 }

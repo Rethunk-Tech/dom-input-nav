@@ -34,6 +34,7 @@ A worked example and the contracts: [HUMANS.md](HUMANS.md).
 - `arrowFocus` and `nextIndex` walk a grid or row of items with the arrow keys.
 - `heldActions`, `firedActions` and `heldElsewhere` turn standard-mapping gamepad state into actions with key repeat.
 - `spatialNext` picks the control nearest in a direction, for controller focus.
+- `Button` names the standard-mapping button indices; `@rethunk/dom-input-nav/playwright` installs and presses a faked pad in a Playwright test.
 
 ## Documentation
 
