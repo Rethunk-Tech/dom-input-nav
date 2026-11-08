@@ -6,6 +6,8 @@ Notable changes to `dom-input-nav`. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-08
+
 ### Added
 
 - `@rethunk/dom-input-nav/playwright`: `installPad`, `press` and `Button` fake a standard-mapping gamepad in a Playwright test.
@@ -35,5 +37,6 @@ Notable changes to `dom-input-nav`. The format follows
 
 [0.1.1]: https://github.com/Rethunk-Tech/dom-input-nav/releases/tag/v0.1.1
 [0.1.0]: https://www.npmjs.com/package/@rethunk/dom-input-nav/v/0.1.0
-[Unreleased]: https://github.com/Rethunk-Tech/dom-input-nav/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/Rethunk-Tech/dom-input-nav/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Rethunk-Tech/dom-input-nav/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/Rethunk-Tech/dom-input-nav/compare/v0.1.1...v0.1.2
