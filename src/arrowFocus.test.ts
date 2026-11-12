@@ -134,3 +134,25 @@ test('nextIndex enters the list when nothing in it is focused', () => {
   expect(nextIndex(grid, -1, 'ArrowUp')).toBe(grid.length - 1)
   expect(nextIndex(grid, -1, 'ArrowLeft')).toBe(grid.length - 1)
 })
+
+test('arrowFocus follows the event target inside a shadow root', () => {
+  const host = document.createElement('div')
+  document.body.replaceChildren(host)
+  const shadow = host.attachShadow({ mode: 'open' })
+  shadow.innerHTML = '<div id="row"><button id="a">a</button><button id="b">b</button></div>'
+  const row = shadow.getElementById('row') as HTMLElement
+  const a = shadow.getElementById('a') as HTMLElement
+  const b = shadow.getElementById('b') as HTMLElement
+  a.focus()
+  arrowFocus(
+    {
+      key: 'ArrowRight',
+      defaultPrevented: false,
+      target: a,
+      currentTarget: row,
+      preventDefault: () => {},
+    },
+    'button',
+  )
+  expect(shadow.activeElement).toBe(b)
+})
