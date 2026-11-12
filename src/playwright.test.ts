@@ -39,7 +39,7 @@ test('installPad works on an already-loaded page', async () => {
   }
   const nav = navigator as Navigator & { getGamepads: typeof navigator.getGamepads }
   const previous = nav.getGamepads
-  delete (globalThis as { pad?: unknown }).pad
+  ;(globalThis as { pad?: unknown }).pad = undefined
   try {
     await page.goto()
     await installPad(page as never)
@@ -48,6 +48,6 @@ test('installPad works on an already-loaded page', async () => {
     expect(navigator.getGamepads()[0]?.buttons.length).toBe(17)
   } finally {
     nav.getGamepads = previous
-    delete (globalThis as { pad?: unknown }).pad
+    ;(globalThis as { pad?: unknown }).pad = undefined
   }
 })

@@ -84,19 +84,14 @@ function arrowFocus(
   }
   const list = [...e.currentTarget.querySelectorAll<HTMLElement>(items)]
   const rects = list.map((item) => item.getBoundingClientRect())
-  let at = list.findIndex((item) => item.contains(e.target instanceof Node ? e.target : null))
-  for (;;) {
-    const next = nextIndex(rects, at, e.key)
-    const target = next < 0 ? null : pick(list[next] as HTMLElement)
+  const at = list.findIndex((item) => item.contains(e.target instanceof Node ? e.target : null))
+  for (let next = nextIndex(rects, at, e.key); next >= 0; next = nextIndex(rects, next, e.key)) {
+    const target = pick(list[next] as HTMLElement)
     if (target) {
       e.preventDefault()
       target.focus()
       return
     }
-    if (next < 0) {
-      return
-    }
-    at = next
   }
 }
 

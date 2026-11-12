@@ -71,7 +71,7 @@ test('arrowFocus skips a disabled item and lands on the next', () => {
       defaultPrevented: false,
       target: a,
       currentTarget: row,
-      preventDefault: () => {},
+      preventDefault: () => undefined,
     },
     'button',
   )
@@ -121,7 +121,7 @@ test('arrowFocus skips a hidden input and focuses the next card button', () => {
       defaultPrevented: false,
       target: a,
       currentTarget: row,
-      preventDefault: () => {},
+      preventDefault: () => undefined,
     },
     '.card',
   )
@@ -150,7 +150,7 @@ test('arrowFocus follows the event target inside a shadow root', () => {
       defaultPrevented: false,
       target: a,
       currentTarget: row,
-      preventDefault: () => {},
+      preventDefault: () => undefined,
     },
     'button',
   )
