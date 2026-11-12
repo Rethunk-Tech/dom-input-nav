@@ -23,6 +23,14 @@ const ROW_SLACK_PX = 4
 function nextIndex(rects: readonly Rect[], at: number, key: string): number {
   const cur = rects[at]
   if (!cur) {
+    if (at < 0 && rects.length > 0) {
+      if (key === 'ArrowDown' || key === 'ArrowRight') {
+        return 0
+      }
+      if (key === 'ArrowUp' || key === 'ArrowLeft') {
+        return rects.length - 1
+      }
+    }
     return -1
   }
   if (key === 'ArrowLeft' || key === 'ArrowRight') {

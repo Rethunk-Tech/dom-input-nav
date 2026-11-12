@@ -127,3 +127,10 @@ test('arrowFocus skips a hidden input and focuses the next card button', () => {
   )
   expect(document.activeElement).toBe(b)
 })
+
+test('nextIndex enters the list when nothing in it is focused', () => {
+  expect(nextIndex(grid, -1, 'ArrowDown')).toBe(0)
+  expect(nextIndex(grid, -1, 'ArrowRight')).toBe(0)
+  expect(nextIndex(grid, -1, 'ArrowUp')).toBe(grid.length - 1)
+  expect(nextIndex(grid, -1, 'ArrowLeft')).toBe(grid.length - 1)
+})
