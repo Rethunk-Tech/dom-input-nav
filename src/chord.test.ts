@@ -151,12 +151,9 @@ test('matchChord hits only an own binding id whose stored chord parses', () => {
   fc.assert(
     fc.property(fc.dictionary(idArb, fc.string(), { maxKeys: 8 }), chordArb, (bindings, e) => {
       const id = matchChord(e, bindings)
-      if (id === null) {
-        expect(id).toBeNull()
-        return
-      }
-      expect(Object.hasOwn(bindings, id)).toBe(true)
-      expect(parseKeys(bindings[id] as string)).not.toBeNull()
+      const hitIsValid =
+        id === null || (Object.hasOwn(bindings, id) && parseKeys(bindings[id] as string) !== null)
+      expect(hitIsValid).toBe(true)
     }),
   )
 })
