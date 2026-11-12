@@ -57,3 +57,23 @@ test('arrowFocus takes a native keydown, and a text field keeps its arrow keys',
   press(t)
   expect(document.activeElement).toBe(t)
 })
+
+test('arrowFocus skips a disabled item and lands on the next', () => {
+  document.body.innerHTML =
+    '<div id="row"><button id="a">A</button><button id="b" disabled>B</button><button id="c">C</button></div>'
+  const row = document.getElementById('row') as HTMLElement
+  const a = document.getElementById('a') as HTMLElement
+  const c = document.getElementById('c') as HTMLElement
+  a.focus()
+  arrowFocus(
+    {
+      key: 'ArrowRight',
+      defaultPrevented: false,
+      target: a,
+      currentTarget: row,
+      preventDefault: () => {},
+    },
+    'button',
+  )
+  expect(document.activeElement).toBe(c)
+})
