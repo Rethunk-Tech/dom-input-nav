@@ -77,3 +77,33 @@ test('arrowFocus skips a disabled item and lands on the next', () => {
   )
   expect(document.activeElement).toBe(c)
 })
+
+test('arrowFocus leaves range and radio inputs their arrow keys', () => {
+  document.body.innerHTML =
+    '<div id="row"><div class="card"><input id="range" type="range"></div><div class="card"><input id="radio" type="radio"><input type="radio"></div></div>'
+  const row = document.getElementById('row') as HTMLElement
+  const range = document.getElementById('range') as HTMLInputElement
+  const radio = document.getElementById('radio') as HTMLInputElement
+  const fire = (target: HTMLElement, key: string) => {
+    let prevented = false
+    arrowFocus(
+      {
+        key,
+        defaultPrevented: false,
+        target,
+        currentTarget: row,
+        preventDefault: () => {
+          prevented = true
+        },
+      },
+      '.card',
+    )
+    return prevented
+  }
+  range.focus()
+  expect(fire(range, 'ArrowRight')).toBe(false)
+  expect(document.activeElement).toBe(range)
+  radio.focus()
+  expect(fire(radio, 'ArrowDown')).toBe(false)
+  expect(document.activeElement).toBe(radio)
+})

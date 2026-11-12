@@ -68,7 +68,9 @@ function arrowFocus(
   if (
     e.defaultPrevented ||
     !(e.currentTarget instanceof Element) ||
-    isTypingTarget(e.target instanceof HTMLElement ? e.target : null)
+    isTypingTarget(e.target instanceof HTMLElement ? e.target : null) ||
+    (e.target instanceof HTMLInputElement &&
+      (e.target.type === 'radio' || e.target.type === 'range' || e.target.type === 'color'))
   ) {
     return
   }
