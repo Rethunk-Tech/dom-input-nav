@@ -1,4 +1,5 @@
 import { expect, test } from 'bun:test'
+import fc from 'fast-check'
 import { formatChord, matchChord, parseKeys } from './chord.ts'
 
 const table = {
@@ -74,4 +75,93 @@ test('a binding named like an Object.prototype member never matches or throws', 
   ]) {
     expect(matchChord(e, { x: keys })).toBeNull()
   }
+})
+
+const eventKeyArb = fc.constantFrom(
+  'Escape',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  ' ',
+  'F5',
+  'Enter',
+  'Tab',
+  'Home',
+  'End',
+  '+',
+  ...'abcdefghijklmnopqrstuvwxyz0123456789'.split(''),
+)
+
+const chordArb = fc.record({
+  key: eventKeyArb,
+  ctrlKey: fc.boolean(),
+  shiftKey: fc.boolean(),
+  altKey: fc.boolean(),
+})
+
+test('parseKeys does not throw and a hit always has a key', () => {
+  fc.assert(
+    fc.property(fc.string(), (keys) => {
+      const parsed = parseKeys(keys)
+      return parsed === null || parsed.key.length > 0
+    }),
+  )
+})
+
+test('formatChord then parseKeys recovers the chord', () => {
+  fc.assert(
+    fc.property(chordArb, (c) => {
+      const keys = formatChord(c)
+      if (keys === null) {
+        return false
+      }
+      const parsed = parseKeys(keys)
+      return (
+        parsed !== null &&
+        parsed.key === c.key &&
+        parsed.ctrlKey === c.ctrlKey &&
+        parsed.shiftKey === c.shiftKey &&
+        parsed.altKey === c.altKey
+      )
+    }),
+  )
+})
+
+test('formatChord of a parsed format is idempotent', () => {
+  fc.assert(
+    fc.property(chordArb, (c) => {
+      const keys = formatChord(c)
+      if (keys === null) {
+        return false
+      }
+      const parsed = parseKeys(keys)
+      return parsed !== null && formatChord(parsed) === keys
+    }),
+  )
+})
+
+test('matchChord agrees with parseKeys on a formatted self-binding', () => {
+  fc.assert(
+    fc.property(chordArb, (c) => {
+      const keys = formatChord(c)
+      if (keys === null) {
+        return false
+      }
+      return matchChord(c, { go: keys }) === 'go'
+    }),
+  )
+})
+
+test('matchChord hits only an own binding id whose stored chord parses', () => {
+  const idArb = fc.stringMatching(/^[A-Za-z][A-Za-z0-9]{0,7}$/)
+  fc.assert(
+    fc.property(fc.dictionary(idArb, fc.string(), { maxKeys: 8 }), chordArb, (bindings, e) => {
+      const id = matchChord(e, bindings)
+      if (id === null) {
+        return true
+      }
+      return Object.hasOwn(bindings, id) && parseKeys(bindings[id] as string) !== null
+    }),
+  )
 })
