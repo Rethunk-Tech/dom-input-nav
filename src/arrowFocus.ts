@@ -54,7 +54,7 @@ function nextIndex(rects: readonly Rect[], at: number, key: string): number {
 }
 
 const FOCUSABLE =
-  'button:not(:disabled), a[href], [tabindex]:not([tabindex="-1"]), input, select, textarea'
+  'button:not(:disabled), a[href], [tabindex]:not([tabindex="-1"]), input:not(:disabled):not([type="hidden"]), select:not(:disabled), textarea:not(:disabled)'
 
 /** Walks a grid or row of items with the arrow keys, which a controller sends under Steam Input. items selects the
  * items inside the handler's element; pick chooses what to focus in the item reached (by default the item itself when

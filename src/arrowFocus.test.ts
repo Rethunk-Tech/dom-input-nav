@@ -107,3 +107,23 @@ test('arrowFocus leaves range and radio inputs their arrow keys', () => {
   expect(fire(radio, 'ArrowDown')).toBe(false)
   expect(document.activeElement).toBe(radio)
 })
+
+test('arrowFocus skips a hidden input and focuses the next card button', () => {
+  document.body.innerHTML =
+    '<div id="row"><div class="card"><input type="hidden"><button id="a">a</button></div><div class="card"><input type="hidden"><button id="b">b</button></div></div>'
+  const row = document.getElementById('row') as HTMLElement
+  const a = document.getElementById('a') as HTMLElement
+  const b = document.getElementById('b') as HTMLElement
+  a.focus()
+  arrowFocus(
+    {
+      key: 'ArrowRight',
+      defaultPrevented: false,
+      target: a,
+      currentTarget: row,
+      preventDefault: () => {},
+    },
+    '.card',
+  )
+  expect(document.activeElement).toBe(b)
+})
