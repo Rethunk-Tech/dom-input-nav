@@ -104,7 +104,7 @@ test('parseKeys does not throw and a hit always has a key', () => {
   fc.assert(
     fc.property(fc.string(), (keys) => {
       const parsed = parseKeys(keys)
-      return parsed === null || parsed.key.length > 0
+      expect(parsed === null || parsed.key.length > 0).toBe(true)
     }),
   )
 })
@@ -113,17 +113,13 @@ test('formatChord then parseKeys recovers the chord', () => {
   fc.assert(
     fc.property(chordArb, (c) => {
       const keys = formatChord(c)
-      if (keys === null) {
-        return false
-      }
-      const parsed = parseKeys(keys)
-      return (
-        parsed !== null &&
-        parsed.key === c.key &&
-        parsed.ctrlKey === c.ctrlKey &&
-        parsed.shiftKey === c.shiftKey &&
-        parsed.altKey === c.altKey
-      )
+      expect(keys).not.toBeNull()
+      expect(parseKeys(keys as string)).toEqual({
+        key: c.key,
+        ctrlKey: c.ctrlKey,
+        shiftKey: c.shiftKey,
+        altKey: c.altKey,
+      })
     }),
   )
 })
@@ -132,11 +128,10 @@ test('formatChord of a parsed format is idempotent', () => {
   fc.assert(
     fc.property(chordArb, (c) => {
       const keys = formatChord(c)
-      if (keys === null) {
-        return false
-      }
-      const parsed = parseKeys(keys)
-      return parsed !== null && formatChord(parsed) === keys
+      expect(keys).not.toBeNull()
+      const parsed = parseKeys(keys as string)
+      expect(parsed).not.toBeNull()
+      expect(formatChord(parsed as NonNullable<typeof parsed>)).toBe(keys)
     }),
   )
 })
@@ -145,10 +140,8 @@ test('matchChord agrees with parseKeys on a formatted self-binding', () => {
   fc.assert(
     fc.property(chordArb, (c) => {
       const keys = formatChord(c)
-      if (keys === null) {
-        return false
-      }
-      return matchChord(c, { go: keys }) === 'go'
+      expect(keys).not.toBeNull()
+      expect(matchChord(c, { go: keys as string })).toBe('go')
     }),
   )
 })
@@ -159,9 +152,11 @@ test('matchChord hits only an own binding id whose stored chord parses', () => {
     fc.property(fc.dictionary(idArb, fc.string(), { maxKeys: 8 }), chordArb, (bindings, e) => {
       const id = matchChord(e, bindings)
       if (id === null) {
-        return true
+        expect(id).toBeNull()
+        return
       }
-      return Object.hasOwn(bindings, id) && parseKeys(bindings[id] as string) !== null
+      expect(Object.hasOwn(bindings, id)).toBe(true)
+      expect(parseKeys(bindings[id] as string)).not.toBeNull()
     }),
   )
 })
