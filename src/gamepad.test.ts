@@ -61,3 +61,7 @@ test('a button pressed in another window does not fire when the app comes back w
   expect(firedActions(new Set(), due, 1100)).toEqual([])
   expect(firedActions(held, due, 1200)).toEqual(['start'])
 })
+
+test('a d-pad direction wins over the stick on the same axis', () => {
+  expect([...heldActions([pad([15], [-0.9, 0])])]).toEqual(['right'])
+})

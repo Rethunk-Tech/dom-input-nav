@@ -36,15 +36,19 @@ function heldActions(pads: readonly (Pick<Gamepad, 'buttons' | 'axes'> | null)[]
       }
     }
     const [x = 0, y = 0] = pad.axes
-    if (x <= -STICK) {
-      held.add('left')
-    } else if (x >= STICK) {
-      held.add('right')
+    if (!pad.buttons[BUTTON.left]?.pressed && !pad.buttons[BUTTON.right]?.pressed) {
+      if (x <= -STICK) {
+        held.add('left')
+      } else if (x >= STICK) {
+        held.add('right')
+      }
     }
-    if (y <= -STICK) {
-      held.add('up')
-    } else if (y >= STICK) {
-      held.add('down')
+    if (!pad.buttons[BUTTON.up]?.pressed && !pad.buttons[BUTTON.down]?.pressed) {
+      if (y <= -STICK) {
+        held.add('up')
+      } else if (y >= STICK) {
+        held.add('down')
+      }
     }
   }
   return held
