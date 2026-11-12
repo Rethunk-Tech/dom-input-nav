@@ -14,7 +14,7 @@ would upload.
 
 - Relative imports keep their `.ts` extension; `tsc -p tsconfig.json` rewrites it to `.js` on emit.
 - `package.json` `files` is `dist` and `src`: the declaration maps point at `../src`.
-- The only entry point is `src/index.ts`; a name not exported there is not API.
+- The entry points are `src/index.ts` (`.`) and `src/playwright.ts` (`./playwright`); a name not exported from those is not API.
 - The chord string format (`Ctrl`, `Shift`, `Alt`, `Esc`, `Space`, `Left`, `Right`, `↑`, `↓`) is a
   serialization an app may have stored; a change to what `parseKeys` accepts or `formatChord` writes
   breaks stored bindings. The tokens are not wording and are never translated.
@@ -27,9 +27,11 @@ would upload.
 
 | File                | Holds                                              |
 | ------------------- | -------------------------------------------------- |
-| `src/index.ts`      | The public surface                                 |
+| `src/index.ts`      | The `.` public surface                             |
+| `src/buttons.ts`    | `Button` names for the standard-mapping indices    |
 | `src/typing.ts`     | `isTypingTarget` and the non-text input list       |
 | `src/typeahead.ts`  | `typeaheadChar` and the typed-name matching        |
 | `src/chord.ts`      | Chord parse, format and match                      |
 | `src/arrowFocus.ts` | Arrow-key focus over a list of items               |
 | `src/gamepad.ts`    | Standard-mapping gamepad actions and spatial focus |
+| `src/playwright.ts` | Pad install/press for Playwright (`./playwright`)  |

@@ -45,6 +45,8 @@ grid?.addEventListener('keydown', (e) => arrowFocus(e, '.card'))
 | `firedActions(held, due, now)`                        | Each action once as it is pressed; a held direction again after a pause, then at a steady rate. `due` is state the caller keeps.                                                                                                                                       |
 | `heldElsewhere(held, due)`                            | Marks held actions as fired, so a press made while another window had the pad does nothing on return.                                                                                                                                                                  |
 | `spatialNext(from, rects, dir, skip?)`                | The index of the nearest rect that lies in the direction; `-1` for none.                                                                                                                                                                                               |
+| `Button`                                              | The standard-mapping button indices (`a` is 0, `start` is 9). Also re-exported from `@rethunk/dom-input-nav/playwright`.                                                                                                                                               |
+| `installPad(page, id?)` / `press(page, button)`       | From `@rethunk/dom-input-nav/playwright`. `installPad` installs a faked standard-mapping pad; `press` presses and releases one button.                                                                                                                                 |
 
 ## Requirements
 
