@@ -3,7 +3,7 @@ import { Button } from './buttons.ts'
 
 // A standard-mapping pad the page polls through navigator.getGamepads, driven by setting globalThis.pad.
 async function installPad(page: Page, id = 'Steam Virtual Gamepad'): Promise<void> {
-  await page.addInitScript((padId) => {
+  const install = (padId: string) => {
     const buttons: boolean[] = new Array(17).fill(false)
     const state = { buttons, axes: [0, 0, 0, 0] }
     Object.assign(globalThis, { pad: state })
@@ -24,7 +24,9 @@ async function installPad(page: Page, id = 'Steam Virtual Gamepad'): Promise<voi
         vibrationActuator: null,
       } as unknown as Gamepad,
     ]
-  }, id)
+  }
+  await page.addInitScript(install, id)
+  await page.evaluate(install, id)
 }
 
 /** Presses and releases one button, a few frames each, as a thumb would. */
