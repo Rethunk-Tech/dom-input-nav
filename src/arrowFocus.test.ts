@@ -156,3 +156,31 @@ test('arrowFocus follows the event target inside a shadow root', () => {
   )
   expect(shadow.activeElement).toBe(b)
 })
+
+test('arrowFocus skips a disabled control that has a tabindex', () => {
+  document.body.innerHTML =
+    '<div id="row"><button id="a">a</button><button id="x" tabindex="0" disabled>x</button><button id="b">b</button></div>'
+  const row = document.getElementById('row') as HTMLElement
+  const a = document.getElementById('a') as HTMLElement
+  a.focus()
+  arrowFocus(
+    { key: 'ArrowRight', defaultPrevented: false, target: a, currentTarget: row, preventDefault() {} },
+    'button',
+  )
+  expect(document.activeElement).toBe(document.getElementById('b') as HTMLElement)
+})
+
+test('arrowFocus passes over an item that cannot take focus', () => {
+  document.body.innerHTML =
+    '<div id="row"><button id="a">a</button><button id="h" hidden>h</button><button id="b">b</button></div>'
+  const row = document.getElementById('row') as HTMLElement
+  const a = document.getElementById('a') as HTMLElement
+  a.focus()
+  const hidden = document.getElementById('h') as HTMLElement
+  hidden.focus = () => undefined
+  arrowFocus(
+    { key: 'ArrowRight', defaultPrevented: false, target: a, currentTarget: row, preventDefault() {} },
+    'button',
+  )
+  expect(document.activeElement).toBe(document.getElementById('b') as HTMLElement)
+})

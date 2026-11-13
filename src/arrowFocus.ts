@@ -62,7 +62,7 @@ function nextIndex(rects: readonly Rect[], at: number, key: string): number {
 }
 
 const FOCUSABLE =
-  'button:not(:disabled), a[href], [tabindex]:not([tabindex="-1"]), input:not(:disabled):not([type="hidden"]), select:not(:disabled), textarea:not(:disabled)'
+  'button:not(:disabled), a[href], [tabindex]:not([tabindex="-1"]):not(:disabled), input:not(:disabled):not([type="hidden"]), select:not(:disabled), textarea:not(:disabled)'
 
 /** Walks a grid or row of items with the arrow keys, which a controller sends under Steam Input. items selects the
  * items inside the handler's element; pick chooses what to focus in the item reached (by default the item itself when
@@ -88,9 +88,12 @@ function arrowFocus(
   for (let next = nextIndex(rects, at, e.key); next >= 0; next = nextIndex(rects, next, e.key)) {
     const target = pick(list[next] as HTMLElement)
     if (target) {
-      e.preventDefault()
       target.focus()
-      return
+      // Focus does not take on a hidden or inert element: go on to the next rather than swallow the key.
+      if ((target.getRootNode() as Document | ShadowRoot).activeElement === target) {
+        e.preventDefault()
+        return
+      }
     }
   }
 }
