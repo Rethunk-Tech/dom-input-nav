@@ -32,9 +32,17 @@ export function typeaheadChar(e: {
   ctrlKey: boolean
   altKey: boolean
   metaKey: boolean
+  isComposing?: boolean
   target: object | null
 }): string | undefined {
-  if (e.ctrlKey || e.altKey || e.metaKey || e.key.length !== 1 || !typedKey(e.key)) {
+  if (
+    e.isComposing ||
+    e.ctrlKey ||
+    e.altKey ||
+    e.metaKey ||
+    e.key.length !== 1 ||
+    !typedKey(e.key)
+  ) {
     return undefined
   }
   return isTypingTarget(e.target as TypingTarget | null) ? undefined : e.key

@@ -31,3 +31,8 @@ test('typeaheadChar takes plain characters outside fields only', () => {
   expect(typeaheadChar(key('a', { target: { tagName: 'INPUT', type: 'text' } }))).toBeUndefined()
   expect(typeaheadChar(key('a', { target: { tagName: 'INPUT', type: 'checkbox' } }))).toBe('a')
 })
+
+test('typeaheadChar ignores keys that belong to an IME composition', () => {
+  expect(typeaheadChar(key('a', { isComposing: true }))).toBeUndefined()
+  expect(typeaheadChar(key('a'))).toBe('a')
+})
