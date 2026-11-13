@@ -4,7 +4,9 @@ import { Button } from './buttons.ts'
 // A standard-mapping pad the page polls through navigator.getGamepads, driven by setting globalThis.pad.
 async function installPad(page: Page, id = 'Steam Virtual Gamepad'): Promise<void> {
   const install = (padId: string) => {
-    const buttons: boolean[] = new Array(17).fill(false)
+    // Runs in the page, so the count stays inside this function.
+    const standardButtons = 17
+    const buttons: boolean[] = new Array(standardButtons).fill(false)
     const state = { buttons, axes: [0, 0, 0, 0] }
     Object.assign(globalThis, { pad: state })
     navigator.getGamepads = () => [

@@ -169,7 +169,7 @@ test('arrowFocus skips a disabled control that has a tabindex', () => {
       defaultPrevented: false,
       target: a,
       currentTarget: row,
-      preventDefault() {},
+      preventDefault: () => undefined,
     },
     'button',
   )
@@ -190,7 +190,7 @@ test('arrowFocus passes over an item that cannot take focus', () => {
       defaultPrevented: false,
       target: a,
       currentTarget: row,
-      preventDefault() {},
+      preventDefault: () => undefined,
     },
     'button',
   )
@@ -209,7 +209,7 @@ test('arrowFocus steps the other way in a right-to-left row', () => {
       defaultPrevented: false,
       target: a,
       currentTarget: row,
-      preventDefault() {},
+      preventDefault: () => undefined,
     },
     'button',
   )
