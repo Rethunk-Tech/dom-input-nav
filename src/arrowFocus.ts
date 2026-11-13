@@ -85,7 +85,15 @@ function arrowFocus(
   const list = [...e.currentTarget.querySelectorAll<HTMLElement>(items)]
   const rects = list.map((item) => item.getBoundingClientRect())
   const at = list.findIndex((item) => item.contains(e.target instanceof Node ? e.target : null))
-  for (let next = nextIndex(rects, at, e.key); next >= 0; next = nextIndex(rects, next, e.key)) {
+  // In a right-to-left row the item after this one lies to its left.
+  const rtl = getComputedStyle(e.currentTarget).direction === 'rtl'
+  const key =
+    rtl && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')
+      ? e.key === 'ArrowLeft'
+        ? 'ArrowRight'
+        : 'ArrowLeft'
+      : e.key
+  for (let next = nextIndex(rects, at, key); next >= 0; next = nextIndex(rects, next, key)) {
     const target = pick(list[next] as HTMLElement)
     if (target) {
       target.focus()

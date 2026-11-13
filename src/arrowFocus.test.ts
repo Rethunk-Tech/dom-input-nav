@@ -164,7 +164,13 @@ test('arrowFocus skips a disabled control that has a tabindex', () => {
   const a = document.getElementById('a') as HTMLElement
   a.focus()
   arrowFocus(
-    { key: 'ArrowRight', defaultPrevented: false, target: a, currentTarget: row, preventDefault() {} },
+    {
+      key: 'ArrowRight',
+      defaultPrevented: false,
+      target: a,
+      currentTarget: row,
+      preventDefault() {},
+    },
     'button',
   )
   expect(document.activeElement).toBe(document.getElementById('b') as HTMLElement)
@@ -179,7 +185,32 @@ test('arrowFocus passes over an item that cannot take focus', () => {
   const hidden = document.getElementById('h') as HTMLElement
   hidden.focus = () => undefined
   arrowFocus(
-    { key: 'ArrowRight', defaultPrevented: false, target: a, currentTarget: row, preventDefault() {} },
+    {
+      key: 'ArrowRight',
+      defaultPrevented: false,
+      target: a,
+      currentTarget: row,
+      preventDefault() {},
+    },
+    'button',
+  )
+  expect(document.activeElement).toBe(document.getElementById('b') as HTMLElement)
+})
+
+test('arrowFocus steps the other way in a right-to-left row', () => {
+  document.body.innerHTML =
+    '<div id="row" dir="rtl" style="direction: rtl"><button id="a">a</button><button id="b">b</button></div>'
+  const row = document.getElementById('row') as HTMLElement
+  const a = document.getElementById('a') as HTMLElement
+  a.focus()
+  arrowFocus(
+    {
+      key: 'ArrowLeft',
+      defaultPrevented: false,
+      target: a,
+      currentTarget: row,
+      preventDefault() {},
+    },
     'button',
   )
   expect(document.activeElement).toBe(document.getElementById('b') as HTMLElement)
