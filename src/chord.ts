@@ -67,11 +67,18 @@ export function parseKeys(keys: string): Chord | null {
   let altKey = false
   let key = plus ? '+' : ''
   for (const part of parts) {
-    if (part === 'Ctrl' || part === 'Cmd' || part === 'Meta') {
+    const token = part.toLowerCase()
+    if (
+      token === 'ctrl' ||
+      token === 'cmd' ||
+      token === 'meta' ||
+      token === 'control' ||
+      token === 'command'
+    ) {
       ctrlKey = true
-    } else if (part === 'Shift') {
+    } else if (token === 'shift') {
       shiftKey = true
-    } else if (part === 'Alt') {
+    } else if (token === 'alt') {
       altKey = true
     } else {
       key = eventKey(part)

@@ -64,6 +64,23 @@ test('Meta folds into Ctrl', () => {
   expect(formatChord({ key: 'k', metaKey: true })).toBe('Ctrl+K')
 })
 
+test('parseKeys matches modifier tokens case-insensitively and Control/Command aliases', () => {
+  const ctrlK = { key: 'k', ctrlKey: true, shiftKey: false, altKey: false }
+  expect(parseKeys('ctrl+k')).toEqual(ctrlK)
+  expect(parseKeys('CTRL+K')).toEqual(ctrlK)
+  expect(parseKeys('cmd+k')).toEqual(ctrlK)
+  expect(parseKeys('Command+K')).toEqual(ctrlK)
+  expect(parseKeys('Control+K')).toEqual(ctrlK)
+  expect(matchChord({ key: 'k' }, { palette: 'ctrl+k' })).toBeNull()
+  expect(matchChord({ key: 'k', ctrlKey: true }, { palette: 'ctrl+k' })).toBe('palette')
+  expect(matchChord({ key: 'k' }, { palette: 'cmd+k' })).toBeNull()
+  expect(matchChord({ key: 'k', ctrlKey: true }, { palette: 'cmd+k' })).toBe('palette')
+  expect(matchChord({ key: 'k' }, { palette: 'CTRL+K' })).toBeNull()
+  expect(matchChord({ key: 'k', ctrlKey: true }, { palette: 'CTRL+K' })).toBe('palette')
+  expect(matchChord({ key: 'k' }, { palette: 'Command+K' })).toBeNull()
+  expect(matchChord({ key: 'k', ctrlKey: true }, { palette: 'Command+K' })).toBe('palette')
+})
+
 test('a binding named like an Object.prototype member never matches or throws', () => {
   const e = { key: 'a', ctrlKey: true }
   for (const keys of [
