@@ -209,8 +209,8 @@ test('nextIndex does not treat a barely overlapping item as up or down', () => {
 test('arrowFocus stops when nothing along the arrow walk can take focus', () => {
   document.body.innerHTML =
     '<div id="grid"><div class="c">a</div><div class="c">b</div><div class="c">c</div></div>'
-  const grid = document.getElementById('grid') as HTMLElement
-  const first = grid.querySelector('.c') as HTMLElement
+  const gridEl = document.getElementById('grid') as HTMLElement
+  const first = gridEl.querySelector('.c') as HTMLElement
   let walks = 0
   // Items without layout share one rect, so a walk that revisits never ends; the bound turns that hang into a failure.
   const pick = () => {
@@ -226,7 +226,7 @@ test('arrowFocus stops when nothing along the arrow walk can take focus', () => 
       key: 'ArrowDown',
       defaultPrevented: false,
       target: first,
-      currentTarget: grid,
+      currentTarget: gridEl,
       preventDefault: () => {
         prevented = true
       },
