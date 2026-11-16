@@ -197,6 +197,38 @@ test('arrowFocus passes over an item that cannot take focus', () => {
   expect(document.activeElement).toBe(document.getElementById('b') as HTMLElement)
 })
 
+test('arrowFocus stops when nothing along the arrow walk can take focus', () => {
+  document.body.innerHTML =
+    '<div id="grid"><div class="c">a</div><div class="c">b</div><div class="c">c</div></div>'
+  const grid = document.getElementById('grid') as HTMLElement
+  const first = grid.querySelector('.c') as HTMLElement
+  let walks = 0
+  // Items without layout share one rect, so a walk that revisits never ends; the bound turns that hang into a failure.
+  const pick = () => {
+    walks += 1
+    if (walks > 10) {
+      throw new Error('the walk did not stop')
+    }
+    return null
+  }
+  let prevented = false
+  arrowFocus(
+    {
+      key: 'ArrowDown',
+      defaultPrevented: false,
+      target: first,
+      currentTarget: grid,
+      preventDefault: () => {
+        prevented = true
+      },
+    },
+    '.c',
+    pick,
+  )
+  expect(walks).toBeLessThan(10)
+  expect(prevented).toBe(false)
+})
+
 test('arrowFocus steps the other way in a right-to-left row', () => {
   document.body.innerHTML =
     '<div id="row" dir="rtl" style="direction: rtl"><button id="a">a</button><button id="b">b</button></div>'

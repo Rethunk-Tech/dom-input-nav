@@ -89,7 +89,15 @@ function arrowFocus(
   const rtl = getComputedStyle(e.currentTarget).direction === 'rtl'
   const flip: Record<string, string> = { ArrowLeft: 'ArrowRight', ArrowRight: 'ArrowLeft' }
   const key = (rtl && flip[e.key]) || e.key
-  for (let next = nextIndex(rects, at, key); next >= 0; next = nextIndex(rects, next, key)) {
+  // Items that cannot take focus leave the walk free to revisit one (zero-size or overlapping rects make
+  // nextIndex oscillate), so each item is tried at most once.
+  const tried = new Set<number>()
+  for (
+    let next = nextIndex(rects, at, key);
+    next >= 0 && !tried.has(next);
+    next = nextIndex(rects, next, key)
+  ) {
+    tried.add(next)
     const target = pick(list[next] as HTMLElement)
     if (target) {
       target.focus()
