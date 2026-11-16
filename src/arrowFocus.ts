@@ -47,7 +47,8 @@ function nextIndex(rects: readonly Rect[], at: number, key: string): number {
   let bestX = Number.POSITIVE_INFINITY
   rects.forEach((r, i) => {
     const gap = down ? r.top - cur.bottom : cur.top - r.bottom
-    if (i === at || gap < -ROW_SLACK_PX) {
+    // Any overlap means the item is not past this one; only a touching edge (gap 0) lies in the arrow's direction.
+    if (i === at || gap < 0) {
       return
     }
     const row = Math.abs(r.top - cur.top)

@@ -197,6 +197,15 @@ test('arrowFocus passes over an item that cannot take focus', () => {
   expect(document.activeElement).toBe(document.getElementById('b') as HTMLElement)
 })
 
+test('nextIndex does not treat a barely overlapping item as up or down', () => {
+  const stacked = [
+    { top: 0, bottom: 2, left: 0, right: 10 },
+    { top: 1, bottom: 3, left: 0, right: 10 },
+  ]
+  expect(nextIndex(stacked, 0, 'ArrowUp')).toBe(-1)
+  expect(nextIndex(stacked, 1, 'ArrowDown')).toBe(-1)
+})
+
 test('arrowFocus stops when nothing along the arrow walk can take focus', () => {
   document.body.innerHTML =
     '<div id="grid"><div class="c">a</div><div class="c">b</div><div class="c">c</div></div>'
