@@ -81,6 +81,13 @@ test('parseKeys matches modifier tokens case-insensitively and Control/Command a
   expect(matchChord({ key: 'k', ctrlKey: true }, { palette: 'Command+K' })).toBe('palette')
 })
 
+test('Shift+digit and Shift+symbol chords match the physical key', () => {
+  expect(matchChord({ key: '!', code: 'Digit1', shiftKey: true }, { one: 'Shift+1' })).toBe('one')
+  expect(formatChord({ key: '!', code: 'Digit1', shiftKey: true })).toBe('Shift+1')
+  expect(matchChord({ key: '_', code: 'Minus', shiftKey: true }, { dash: 'Shift+-' })).toBe('dash')
+  expect(formatChord({ key: '_', code: 'Minus', shiftKey: true })).toBe('Shift+-')
+})
+
 test('a binding named like an Object.prototype member never matches or throws', () => {
   const e = { key: 'a', ctrlKey: true }
   for (const keys of [
