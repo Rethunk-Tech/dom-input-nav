@@ -13,6 +13,7 @@ const pad = (pressed: number[], axes: number[] = [0, 0]) => ({
 test('buttons and the left stick map to actions', () => {
   expect([...heldActions([pad([0, 5])])]).toEqual(['confirm', 'nextTab'])
   expect([...heldActions([null, pad([], [-0.9, 0.7])])]).toEqual(['left', 'down'])
+  expect([...heldActions([pad([], [0.9, -0.9])])]).toEqual(['right', 'up'])
   expect([...heldActions([pad([], [0.3, -0.3])])]).toEqual([])
 })
 
@@ -53,9 +54,10 @@ test('directions pick the nearest control in line', () => {
 })
 
 test('a button pressed in another window does not fire when the app comes back while it is held', () => {
-  const due = new Map<PadAction, number>()
+  const due = new Map<PadAction, number>([['down', 0]])
   const held = new Set<PadAction>(['start'])
   heldElsewhere(held, due)
+  expect(due.has('down')).toBe(false)
   expect(firedActions(held, due, 1000)).toEqual([])
   // Released and pressed again with the app in front, it fires as usual.
   expect(firedActions(new Set(), due, 1100)).toEqual([])
