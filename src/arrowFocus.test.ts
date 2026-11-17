@@ -133,6 +133,9 @@ test('nextIndex enters the list when nothing in it is focused', () => {
   expect(nextIndex(grid, -1, 'ArrowRight')).toBe(0)
   expect(nextIndex(grid, -1, 'ArrowUp')).toBe(grid.length - 1)
   expect(nextIndex(grid, -1, 'ArrowLeft')).toBe(grid.length - 1)
+  expect(nextIndex(grid, -1, 'Enter')).toBe(-1)
+  expect(nextIndex(grid, grid.length, 'ArrowDown')).toBe(-1)
+  expect(nextIndex([], 0, 'ArrowDown')).toBe(-1)
 })
 
 test('arrowFocus follows the event target inside a shadow root', () => {
