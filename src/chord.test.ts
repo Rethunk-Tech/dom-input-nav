@@ -53,6 +53,8 @@ test('the plus key round-trips and fires', () => {
 test('formatChord ignores modifier-only presses', () => {
   expect(formatChord({ key: 'Control', ctrlKey: true })).toBeNull()
   expect(formatChord({ key: 'Shift', shiftKey: true })).toBeNull()
+  expect(parseKeys('Ctrl')).toBeNull()
+  expect(parseKeys('Ctrl+Shift+Alt')).toBeNull()
 })
 
 test('a chord stored empty matches no key, and the first id holding a chord wins', () => {
@@ -86,6 +88,10 @@ test('Shift+digit and Shift+symbol chords match the physical key', () => {
   expect(formatChord({ key: '!', code: 'Digit1', shiftKey: true })).toBe('Shift+1')
   expect(matchChord({ key: '_', code: 'Minus', shiftKey: true }, { dash: 'Shift+-' })).toBe('dash')
   expect(formatChord({ key: '_', code: 'Minus', shiftKey: true })).toBe('Shift+-')
+  expect(formatChord({ key: 'Enter', code: 'Enter', shiftKey: true })).toBe('Shift+Enter')
+  expect(matchChord({ key: 'Enter', code: 'Enter', shiftKey: true }, { go: 'Shift+Enter' })).toBe(
+    'go',
+  )
 })
 
 test('a binding named like an Object.prototype member never matches or throws', () => {
