@@ -28,4 +28,12 @@ test('ancestors: inside a typing target counts, a checkbox in one still does not
   const box = { tagName: 'INPUT', type: 'checkbox', parentElement: { tagName: 'DIV' } }
   expect(isTypingTarget(box, { ancestors: true })).toBe(false)
   expect(isTypingTarget(null, { ancestors: true })).toBe(false)
+  expect(isTypingTarget({ tagName: 'SPAN' }, { ancestors: true })).toBe(false)
+})
+
+test('the rest of the non-text list is not typing even in uppercase, a missing type is', () => {
+  for (const type of ['radio', 'button', 'submit', 'reset', 'image', 'color', 'file', 'RADIO']) {
+    expect(isTypingTarget({ tagName: 'INPUT', type })).toBe(false)
+  }
+  expect(isTypingTarget({ tagName: 'INPUT' })).toBe(true)
 })
