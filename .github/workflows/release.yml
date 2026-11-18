@@ -1,7 +1,5 @@
 name: Release
 
-# A tag `v*` publishes the GitHub Release from the tag's annotation, moves the floating
-# major, and publishes the version in package.json to npm with provenance.
 on:
   push:
     tags:
@@ -23,6 +21,20 @@ jobs:
       contents: read
       id-token: write
       attestations: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+  # Extra job: this package publishes to npm. Canon compares job step arrays whole, so
+  # provenance publish cannot sit on `build`.
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
