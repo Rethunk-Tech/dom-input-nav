@@ -66,4 +66,26 @@ test('a button pressed in another window does not fire when the app comes back w
 
 test('a d-pad direction wins over the stick on the same axis', () => {
   expect([...heldActions([pad([15], [-0.9, 0])])]).toEqual(['right'])
+  expect([...heldActions([pad([12], [0, 0.9])])]).toEqual(['up'])
+  expect([...heldActions([pad([13], [0, -0.9])])]).toEqual(['down'])
+})
+
+test('missing axes read as centred, and missing buttons still let the stick fire', () => {
+  expect([...heldActions([{ buttons: pad([]).buttons, axes: [] }])]).toEqual([])
+  expect([...heldActions([{ buttons: [], axes: [-0.9, 0] }])]).toEqual(['left'])
+})
+
+test('left picks the nearest in line, an overlapping-aside control is skipped, and a score tie prefers centred', () => {
+  expect(spatialNext(rects[2] as (typeof rects)[0], rects, 'left', 2)).toBe(1)
+  expect(spatialNext(rects[0] as (typeof rects)[0], rects, 'left', 0)).toBe(-1)
+  expect(spatialNext(rects[2] as (typeof rects)[0], rects, 'left')).toBe(1)
+
+  const from = box(0, 0, 100)
+  const asideOverlap = box(50, 200, 40)
+  expect(spatialNext(from, [from, asideOverlap], 'right', 0)).toBe(-1)
+
+  const origin = box(0, 0, 40)
+  const off = box(80, 10, 40)
+  const centred = box(80, 0, 40)
+  expect(spatialNext(origin, [origin, off, centred], 'right', 0)).toBe(2)
 })
