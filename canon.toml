@@ -1,1 +1,4 @@
 reconciled = "canon v0.1.0-poc"
+
+[deviations]
+"patterns-repo-settings-00001" = "this repository holds Actions and JavaScript/TypeScript, not Go, so the CodeQL matrix uses javascript-typescript instead of go"
