@@ -6,6 +6,24 @@ Notable changes to `dom-input-nav`. The format follows
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-21
+
+### Changed
+
+- `FOCUSABLE` is a stricter selector: `[tabindex]`, `input`, `select` and `textarea` now skip disabled elements, and `input` skips `type="hidden"`. If you matched against it expecting the old looser set, check your lists.
+
+### Added
+
+- `Chord.code`: match the physical key (`Digit1`, `Minus`). Shifted digits and symbols match this, not `key`.
+- `isComposing` on the typeahead key event, so keys typed during IME composition are ignored.
+
+### Fixed
+
+- `arrowFocus` skips unfocusable and disabled items, leaves radio, range and color their arrow keys, enters the list when nothing in it is focused, resolves the focused item from the event target, swaps Left and Right in a right-to-left row, requires a clear side before an item counts as up or down, and stops the walk once an item has been tried.
+- Chord modifier tokens match case-insensitively, and `Shift+digit` chords match on `event.code`.
+- The gamepad ignores the stick when the d-pad holds that axis.
+- The Playwright `installPad` installs on the current document.
+
 ## [0.2.0] - 2026-11-08
 
 ### Added
